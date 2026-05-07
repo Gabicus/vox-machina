@@ -17,7 +17,9 @@ The result is a voice with digitally precise pitch stepping, synthetic formant c
 
 ## Audio Examples
 
-*Coming soon — check the `audio/output/` directory after running the pipeline.*
+**IRIS demo:** [`audio/output/iris_output.wav`](audio/output/iris_output.wav) — "Well done. Here come the test results. You are a horrible person."
+
+Generated with the default IRIS profile (af_nova + note-based PSOLA + comb filter). Clone the repo and play it, or generate your own with the quick start below.
 
 ## Quick Start
 
