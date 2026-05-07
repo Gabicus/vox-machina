@@ -1,0 +1,6 @@
+kokoro-onnx>=0.4.7
+numpy
+pyworld
+praat-parselmouth
+soundfile
+librosa

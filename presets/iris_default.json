@@ -1,0 +1,15 @@
+{
+  "voice": "af_nova",
+  "text": "Well done. Jeffrey. Here come the test results. You are a horrible person.",
+  "speed": 0.93,
+  "target_pitch_std": 34.0,
+  "quantize_passes": 2.0,
+  "transition_frames": 2.0,
+  "hold_min_frames": 6.0,
+  "formant_shift_ratio": 1.08,
+  "spectral_tilt_boost": 1.0,
+  "comb_filter_strength": 0.6,
+  "octave_up_mix": 0.0,
+  "octave_down_mix": 0.0,
+  "octave_detune": 0.0
+}

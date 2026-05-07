@@ -1,0 +1,28 @@
+# GLaDOS reference audio (Valve IP — not for redistribution)
+audio/reference/*.wav
+
+# Generated output
+audio/output/
+audio/*.wav
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Environment
+.env
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
