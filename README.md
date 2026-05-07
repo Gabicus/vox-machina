@@ -271,6 +271,94 @@ Kokoro ships with multiple voices. Use `--list-voices` to see all. Key ones:
 
 All voices work with the processing pipeline. The formant/spectral parameters may need adjustment per voice.
 
+## Full Content Creation Workflow
+
+Vox Machina is two things: a **voice persona** (how the AI thinks and writes) and a **voice engine** (how the AI sounds). The full workflow connects them.
+
+### Step 1: Generate Script with AI Persona
+
+Use the system prompts in `prompts/` to make any LLM write in the IRIS or SILAS voice.
+
+**With Claude:**
+```
+# Paste the contents of prompts/iris_system_prompt.md as your system prompt, then:
+"Write a 20-second voiceover introducing my new app that organizes bookmarks."
+```
+
+**With ChatGPT:**
+```
+# Start a new chat, paste the system prompt from prompts/iris_system_prompt.md, then:
+"Write a 30-second narration for a YouTube tech review of wireless earbuds."
+```
+
+**With any LLM API:**
+```python
+response = client.messages.create(
+    model="claude-sonnet-4-20250514",
+    system=open("prompts/iris_system_prompt.md").read(),
+    messages=[{"role": "user", "content": "Write a 15-second product intro for a password manager."}]
+)
+script = response.content[0].text
+```
+
+### Step 2: Synthesize Voice
+
+```bash
+# From text directly
+python scripts/iris_silas_voice.py iris "Your generated script here"
+
+# From a saved script file
+python scripts/iris_silas_voice.py iris -f script.txt -o final_narration.wav
+
+# Use SILAS for the male variant
+python scripts/iris_silas_voice.py silas -f script.txt -o silas_narration.wav
+```
+
+### Step 3: Fine-tune (Optional)
+
+If the default profile doesn't match your content:
+
+```bash
+# Open the GUI tuner
+python scripts/iris_tuner.py
+
+# Paste your script text, adjust sliders, generate, listen
+# Save your custom preset for reuse
+```
+
+### Example: Instagram Reel Pipeline
+
+```bash
+# 1. Generate script (save LLM output to file)
+echo "You've been doom-scrolling for forty-seven minutes. I've been counting." > reel_script.txt
+
+# 2. Synthesize
+python scripts/iris_silas_voice.py iris -f reel_script.txt -o reel_voice.wav
+
+# 3. Layer over video with ffmpeg
+ffmpeg -i background_video.mp4 -i reel_voice.wav \
+  -filter_complex "[1:a]adelay=1000|1000[voice];[0:a][voice]amix=inputs=2" \
+  -c:v copy final_reel.mp4
+```
+
+### Creating Your Own Character
+
+1. Write a persona using `prompts/custom_voice_prompt_template.md`
+2. Tune a matching voice profile in the GUI tuner
+3. Save the preset JSON
+4. Add the profile to `PROFILES` in `iris_silas_voice.py`
+5. Generate content: LLM writes the words, Vox Machina gives them a voice
+
+### Included Prompts
+
+| File | Character | Description |
+|---|---|---|
+| `prompts/iris_system_prompt.md` | IRIS | Female sardonic AI — cold, musical, devastating |
+| `prompts/silas_system_prompt.md` | SILAS | Male sardonic AI — dry, measured, academic |
+| `prompts/custom_voice_prompt_template.md` | (template) | Build your own character voice |
+
+The full persona definition with all seven rhetorical weapons, tone calibration modes, and voice direction is in `SKILL.md`.
+
 ## Troubleshooting
 
 ### "Model files not found"
