@@ -213,6 +213,30 @@ When the user asks to synthesize/generate voice:
 4. Always report the output file path and basic analysis (pitch, HNR)
 5. Output goes to `~/Desktop/Projects/vox-machina/audio/output/` by default
 
+### Voice Variants
+
+SILAS has multiple voice variants with different base voices. All use the same IRIS-matched processing chain.
+
+| Variant | Command | Base Voice | Pitch | Character |
+|---------|---------|-----------|-------|-----------|
+| **IRIS** | `iris` | af_nova | 169Hz | Bright, sardonic female |
+| **SILAS** | `silas` | am_onyx | 92Hz | Deep, deadpan male |
+| **SILAS (Adam)** ★ | `silas_adam` | am_adam | 125Hz | Mid-deep, measured, authoritative |
+| **SILAS (Fenrir)** | `silas_fenrir` | am_fenrir | 144Hz | Mid-range, most expressive |
+
+★ = Victor's preferred SILAS voice
+
+```bash
+# Default SILAS (am_onyx)
+python3 ~/Desktop/Projects/vox-machina/scripts/iris_silas_voice.py silas "Text"
+
+# Preferred SILAS variant (am_adam)
+python3 ~/Desktop/Projects/vox-machina/scripts/iris_silas_voice.py silas_adam "Text"
+
+# Expressive variant (am_fenrir)
+python3 ~/Desktop/Projects/vox-machina/scripts/iris_silas_voice.py silas_fenrir "Text"
+```
+
 ### Pipeline Architecture
 
 ```
